@@ -1,0 +1,401 @@
+---
+title: "Data Visualisation for Economics"
+subtitle: "Analysis income taxes by wikipedia scrapping"
+author: 
+  - "Lucas Simatovic"
+  - "Master 2 : Economics DADEE track"
+  - "Assignment 3"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+abstract: 
+  Through this exercice, we are going to analyse the income highest tax by countries in the world thanks to a wikipedia table. We start by cleaning first with a cleaning function without caracters not relevant, then construct a continent column which associate countries to the continent, different visualisations like bar charts or world map, comparing VAT to highest income tax, handle missing data and finally a free visualisation which tell us a story from INSEE. 
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Libraries
+
+```{r message=FALSE, warning=FALSE}
+library(rvest)
+library(magrittr)
+library(tidyverse)
+library(stringr)
+library(dplyr)
+library(countrycode)
+```
+
+# First part
+
+```{r message=FALSE, warning=FALSE}
+url <- "https://en.wikipedia.org/wiki/List_of_countries_by_tax_rates"
+
+tax_data_raw <- read_html(url) %>%
+  html_element("table.wikitable") %>%
+  html_table(fill = TRUE)
+
+tax_data_raw
+
+tax_data <- tax_data_raw %>%
+  select(
+    Country = 1, 
+    CorporateTax = contains("Corporate"),
+    IncomeTaxTop = contains("Individual"), 
+    VAT = contains("VAT")
+  ) %>%
+  select(1:5)
+
+tax_data
+
+tax_data$IncomeTaxTop1 <- NULL
+tax_data <- tax_data[-1, ]
+colnames(tax_data) <- c(
+  "Country", "Corporate_Tax", "IncomeTaxTop2" = "Top_Marginal_Income_Tax", "VAT")
+
+tax_data
+```
+
+# Cleaning function
+
+```{r message=FALSE, warning=FALSE}
+clean_rate <- function(x) {
+  x <- str_remove_all(x, "\\[.*?\\]|%|\\*")
+  sapply(x, function(cell_content) {
+    nums_str <- unlist(str_extract_all(cell_content, "[0-9.,]+"))
+    nums <- suppressWarnings(parse_number(nums_str))
+    nums <- nums[!is.na(nums)]
+    nums <- nums[nums < 100]
+    if (length(nums) == 0) return(NA_real_)
+    max(nums, na.rm = TRUE)
+  })
+}
+```
+
+```{r message=FALSE, warning=FALSE}
+tax_data_clean <- tax_data %>%
+  mutate(
+    Country = str_remove_all(Country, "\\[.*?\\]") %>% str_trim(),
+    IncomeTaxTop = clean_rate(Top_Marginal_Income_Tax),
+    CorporateTax = clean_rate(Corporate_Tax),
+    VAT = clean_rate(VAT)
+  ) %>%
+  filter(!is.na(Country) & Country != "") 
+
+tax_data_clean$Top_Marginal_Income_Tax <- NULL
+tax_data_clean$Corporate_Tax <- NULL
+
+tax_data_clean
+
+write.csv(tax_data_clean, "tax_data_clean.csv")
+```
+
+# Manual implementation of data 
+
+> This new dataset is the same as the professor by implementing data manually from my previous scrape. It's not use for next visualizations. There is no big differences between tax_data_clean and tax_data_clean_new. Maybe the previous scrapping was made few years ago and now data differ. 
+
+```{r}
+
+tax_data_clean_new <- tax_data_clean %>%
+  mutate(
+    CorporateTax = case_when(
+      Country == "Austria" ~ 25.0,
+      Country == "Azores" ~ 13.6,
+      Country == "Barbados" ~ 5.5,
+      Country == "Belize" ~ 0.75,
+      Country == "Brunei" ~ 1.0,
+      Country == "Canada" ~ 26.5,
+      Country == "Czech Republic" ~ 19.0,
+      Country == "Denmark" ~ 22.0,
+      Country == "Estonia" ~ 0.0,
+      Country == "Finland" ~ 20.0,
+      Country == "Georgia" ~ 0.0,
+      Country == "Latvia" ~ 0.0,
+      Country == "Madeira" ~ 5.0,
+      Country == "Marshall Islands" ~ 0.8,
+      Country == "Monaco" ~ 0.0,
+      Country == "Norway" ~ 23.0,
+      Country == "Pakistan" ~ 0.0,
+      Country == "Portugal" ~ 21.0,
+      Country == "Saudi Arabia" ~ 2.5,
+      Country == "Somalia" ~ 0.0,
+      Country == "Sudan" ~ 5.0,
+      Country == "Tajikistan" ~ 13.0,
+      Country == "United Arab Emirates" ~ 0.0,
+      Country == "United Kingdom" ~ 19.0,
+      Country == "Uzbekistan" ~ 12.0,
+      Country == "U.S. Virgin Islands" ~ 21.0,
+      TRUE ~ CorporateTax
+    ),
+    IncomeTaxTop = case_when(
+      Country == "Bahamas" ~ 0.0,
+      Country == "Chile" ~ 35.0,
+      Country == "Colombia" ~ 35.0,
+      Country == "Egypt" ~ 22.5,
+      Country == "France" ~ 47.2,
+      Country == "Guyana" ~ 40.0,
+      Country == "Hungary" ~ 15.0,
+      Country == "India" ~ 30.0,
+      Country == "Ireland" ~ 47.2,
+      Country == "Jamaica" ~ 25.0,
+      Country == "Kazakhstan" ~ 10.0,
+      Country == "Kenya" ~ 30.0,
+      Country == "Maldives" ~ 0.0,
+      Country == "Mauritius" ~ 20.0,
+      Country == "Moldova" ~ 12.0,
+      Country == "Montenegro" ~ 12.65,
+      Country == "Norway" ~ 40.0,
+      Country == "Pakistan" ~ 35.0,
+      Country == "Poland" ~ 41.0,
+      Country == "Russia" ~ 15.0,
+      Country == "Somalia" ~ 0.0,
+      Country == "South Korea" ~ 42.0,
+      Country == "Tajikistan" ~ 13.0,
+      Country == "Ukraine" ~ 18.0,
+      Country == "United Kingdom" ~ 62.0,
+      Country == "United States" ~ 45.38,
+      TRUE ~ IncomeTaxTop
+    ),
+    VAT = case_when(
+      Country == "Andorra" ~ 4.5,
+      Country == "Angola" ~ 10.0,
+      Country == "Azores" ~ 4.0,
+      Country == "Brazil" ~ 20.0,
+      Country == "Brunei" ~ 55.0,
+      Country == "Canada" ~ 5.0,
+      Country == "Curaçao" ~ 6.0,
+      Country == "Ecuador" ~ 12.0,
+      Country == "Greece" ~ 24.0,
+      Country == "India" ~ 28.0,
+      Country == "Iraq" ~ 0.0,
+      Country == "Israel" ~ 17.0,
+      str_detect(Country, "Kosovo") ~ 18.0, 
+      Country == "North Korea" ~ 4.0,
+      Country == "Madeira" ~ 5.0,
+      Country == "Monaco" ~ 19.6,
+      Country == "Montenegro" ~ 21.0,
+      Country == "Pakistan" ~ 17.0,
+      Country == "Panama" ~ 7.0,
+      Country == "San Marino" ~ 0.0,
+      Country == "Slovakia" ~ 20.0,
+      TRUE ~ VAT
+    )
+  )
+tax_data_clean_new
+
+write.csv(tax_data_clean_new, "tax_data_clean_new.csv")
+``` 
+
+### Micronesia is not defined in in the wikipedia table librarie. So I have implemented it associted with the continent Oceania. And other countries too to match with my scrape. 
+
+```{r message=FALSE, warning=FALSE}
+df_analysis <- tax_data_clean %>%
+  mutate(Continent = countrycode(sourcevar = Country,
+                                 origin = "country.name",
+                                 destination = "continent")) %>%
+  mutate(Continent = case_when(
+    Country == "Azores" ~ "Europe",
+    str_detect(Country, "Kosovo") ~ "Europe",      
+    Country == "Madeira" ~ "Europe",
+    ###############################################
+    str_detect(Country, "Micronesia") ~ "Oceania", 
+    ###############################################
+    Country == "Saint Martin" ~ "Americas",
+    Country == "Sark" ~ "Europe",
+    TRUE ~ Continent
+  )) %>%
+  filter(!is.na(Continent))
+
+df_analysis %>%
+  filter(
+    Country %in% c("Azores", "Madeira", "Saint Martin", "Sark") |
+    str_detect(Country, "Kosovo") |
+    str_detect(Country, "Micronesia")
+  ) %>%
+  select(Country, Continent, everything()) 
+```
+
+```{r message=FALSE, warning=FALSE}
+summary_stats <- df_analysis %>%
+  group_by(Continent) %>%
+  summarise(
+    Average_Income_Tax_Top = mean(IncomeTaxTop, na.rm = TRUE),
+    Average_VAT = mean(VAT, na.rm = TRUE)
+  ) 
+
+print(summary_stats)
+```
+
+> The continent which has the highest average income tax rate is Europe.
+> The continent which has the second highest average income tax rate is Africa.
+> The continent which has the highest average VAT rate is Europe too.
+
+```{r message=FALSE, warning=FALSE}
+ggplot(summary_stats, 
+       aes(x = reorder(Continent, -Average_Income_Tax_Top), 
+           y = Average_Income_Tax_Top,
+           fill = Continent)) + 
+  geom_col(show.legend = FALSE) + 
+  scale_fill_brewer(palette = "Set2") +
+  geom_text(aes(label = round(Average_Income_Tax_Top, 1)), 
+            vjust = -0.5, size = 3.5, fontface = "bold") +
+  labs(title = "Average Income tax rate by continent",
+       x = "Continent", 
+       y = "Average rate (%)") +
+  theme_minimal() +
+  theme(panel.grid.major.x = element_blank() 
+  )
+```
+
+```{r message=FALSE, warning=FALSE}
+summary_long <- summary_stats %>%
+  pivot_longer(cols = c(Average_Income_Tax_Top, Average_VAT), 
+               names_to = "Tax_Type", 
+               values_to = "Rate")
+
+summary_long
+
+ggplot(summary_long, aes(x = Continent, y = Rate, fill = Tax_Type)) +
+  geom_col(position = position_dodge(width = 0.8), width = 0.7) +
+  geom_text(aes(label = round(Rate, 1)), 
+            position = position_dodge(width = 0.8), 
+            vjust = -0.5, size = 3, fontface = "bold") +
+  labs(title = "VAT vs Income tax rate",
+       subtitle = "Average rate by continent",
+       x = "Continent", 
+       y = "Average rate in percentage", 
+       fill = "Tax type") +
+  scale_fill_brewer(palette = "Paired") +
+  theme_minimal() +
+  theme(
+    panel.grid.major.x = element_blank(), 
+    legend.position = "top",              
+    legend.title = element_text(face = "bold")
+  )
+```
+
+```{r message=FALSE, warning=FALSE}
+world_map <- map_data("world")
+
+df_analysis$iso3 <- countrycode(df_analysis$Country, "country.name", "iso3c")
+
+df_analysis
+
+world_map$iso3 <- countrycode(world_map$region, "country.name", "iso3c")
+
+map_data_joined <- left_join(world_map, df_analysis, by = "iso3")
+
+ggplot(map_data_joined, aes(long, lat, group = group, fill = IncomeTaxTop)) +
+  geom_polygon(color = "white", size = 0.1) +
+  scale_fill_gradient(low = "lightgreen", high = "darkred", na.value = "gray80") +
+  labs(title = "Top Marginal Income Tax Rate by Country",
+       fill = "Tax Rate (%)") +
+  theme_void() +
+  coord_fixed(1.3)
+```
+
+```{r message=FALSE, warning=FALSE}
+df_imputed <- df_analysis %>%
+  mutate(IncomeTax_Imputed = ifelse(is.na(IncomeTaxTop), CorporateTax, IncomeTaxTop))
+
+df_imputed$CorporateTax <- NULL
+df_imputed$VAT <- NULL
+
+df_imputed
+```
+
+```{r message=FALSE, warning=FALSE}
+ggplot(df_imputed, aes(x = IncomeTax_Imputed)) +
+  geom_histogram(aes(fill = after_stat(x)), binwidth = 5, color = "white") +
+  scale_fill_viridis_c(option = "viridis", direction = -1, name = "Rate in percentage") +
+  labs(title = "Distribution of tax rates after imputation of corporate taxes",
+       x = "Rate in percentage", y = "Number of countries") +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+## I add a visualizations of the corporate taxes imputed in income taxes for countires which don't have values. Always in terms of number of countries.  
+
+```{r}
+df_visu <- df_imputed %>%
+  mutate(Source = ifelse(is.na(IncomeTaxTop), "Imputed (Corporate)", "Original"))
+
+ggplot(df_visu, aes(x = IncomeTax_Imputed, fill = Source)) +
+  geom_histogram(binwidth = 5, color = "white", alpha = 0.8) +
+  scale_fill_manual(values = c("Original" = "#2c3e50", "Imputed (Corporate)" = "#e74c3c")) +
+  labs(title = "Distinction of the distribution of tax rates (Original vs Imputed)",
+       x = "Rate (%)", y = "Number of countries") +
+  theme_minimal()
+```
+
+```{r message=FALSE, warning=FALSE}
+map_data_imputed <- left_join(world_map, df_imputed, by = "iso3")
+
+ggplot(map_data_imputed, aes(long, lat, group = group, fill = IncomeTax_Imputed)) +
+  geom_polygon(color = "white", size = 0.1) +
+  scale_fill_viridis_c(option = "viridis", direction = -1, na.value = "gray90", name = "Tax Rate (%)") +
+  labs(title = "Global Income Tax Rates with Imputed value",
+       subtitle = "Missing income tax rates replaced by corporate tax rates") +
+  theme_void() +
+  coord_fixed(1.3)
+```
+
+# Third part
+
+```{r message=FALSE, warning=FALSE}
+df_emploi <- read_delim("DD_EEC_ANNUEL_2024_data.csv", delim = ";", trim_ws = TRUE)
+df_emploi
+
+df_emploi$UNIT_MEASURE <- NULL
+df_emploi$EMPFORM <- NULL
+df_emploi$EMPSTA <- NULL
+df_emploi$UNDEREMP <- NULL
+df_emploi$OBS_STATUS <- NULL
+df_emploi$UNEMPDUR <- NULL
+df_emploi$WKTIME <- NULL
+df_emploi$ACTIVITY <- NULL
+df_emploi$COMPOHALO <- NULL
+
+df_plot <- df_emploi %>%
+  filter(
+    EEC_MEASURE == "UNEMPRATE",       
+    PCS == "_T",
+    EDUC == "_T",
+    IMMI == "_T",
+    SEX != "_T",
+    AGE %in% c("Y15T24", "Y25T49", "Y50T64")
+  ) %>%
+  mutate(
+    Age_Label = case_when(
+      AGE == "Y15T24" ~ "Youth from 15 to 24 years old",
+      AGE == "Y25T49" ~ "Actives from 25 to 49 years old",
+      AGE == "Y50T64" ~ "Seniors from 50 to 64 years old"
+    ),
+    Age_Label = factor(Age_Label, levels = c("Youth from 15 to 24 years old", "Actives from 25 to 49 years old", "Seniors from 50 to 64 years old")),
+    Sex_Label = ifelse(SEX == "M", "Men", "Women")
+  )
+
+df_plot
+
+ggplot(df_plot, aes(x = Age_Label, y = OBS_VALUE, fill = Sex_Label)) +
+  geom_col(position = "dodge", alpha = 0.9) + 
+  geom_text(aes(label = paste0(round(OBS_VALUE, 1), "%")), 
+            position = position_dodge(width = 0.9), 
+            vjust = -0.5, size = 3.5, fontface = "bold") +
+  scale_fill_manual(values = c("Men" = "#2c3e50", "Women" = "#e74c3c")) +
+  labs(
+    title = "Youth unemployment in 2024 by age and sex in France",
+    x = NULL,
+    y = "Unemployment rate (%)",
+    fill = NULL,
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "top",
+    panel.grid.major.x = element_blank(),
+    plot.title = element_text(face = "bold", size = 14)
+  )
+```
+
+## This visualization highlights an inequality in the French labor market which tell us that age is the primary determinant of unemployment risk more than gender. The story told us that: to start your career after your diploma, it's difficult to enter in. The youth category dominates the chart with unemployment rates nearing 20 percent, which is three times higher than the rates observed for actives workers or seniors.
+
+## This disparity highlights from school to work transition. It's often due to a period characterized by precarious contracts and friction between employment and unemployment. To illustrate this story effectively, a grouped bar chart was chosen to simultaneously compare age and gender, with age groups arranged chronologically. Contrary to what one might think, the difference between men and women is very close in terms of unemployment when you are young and equal when you are active or senior. 

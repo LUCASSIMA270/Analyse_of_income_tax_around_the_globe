@@ -1,0 +1,233 @@
+"","Country","VAT","IncomeTaxTop","CorporateTax"
+"1","Afghanistan",0,20,20
+"2","Albania",20,23,15
+"3","Algeria",19,35,26
+"4","American Samoa",0,6,34
+"5","Andorra",9.5,10,10
+"6","Angola",14,17,30
+"7","Anguilla",0,0,0
+"8","Antigua and Barbuda",15,0,25
+"9","Argentina",21,35,35
+"10","Armenia",20,22,18
+"11","Aruba",1.5,58.95,25
+"12","Australia",10,45,30
+"13","Austria",20,55,23
+"14","Azerbaijan",18,25,20
+"15","Azores",16,36.2,16.8
+"16","Bahamas",12,8.8,0
+"17","Bahrain",10,0,0
+"18","Bangladesh",15,25,32.5
+"19","Barbados",17.5,38,30
+"20","Belarus",20,43.37,20
+"21","Belgium",21,60.45,25
+"22","Belize",12.5,25,37.5
+"23","Benin",18,35,35
+"24","Bermuda",0,0,0
+"25","Bhutan",NA,25,26
+"26","Bolivia",13,25,29
+"27","Bosnia and Herzegovina",17,10,10
+"28","Botswana",14,25,22
+"29","Brazil",30.7,27.5,40
+"30","Brunei",NA,0,18.5
+"31","Bulgaria",20,10,10
+"32","Burkina Faso",18,25,27.5
+"33","Burundi",18,35,35
+"34","Cambodia",10,20,20
+"35","Cameroon",19.25,35,31.5
+"36","Canada",15,58.5,31
+"37","Cape Verde",15,27.5,25
+"38","Cayman Islands",0,0,0
+"39","Central African Republic",19,50,30
+"40","Chad",NA,NA,20
+"41","Chile",19,40,27
+"42","China",13,45,25
+"43","Colombia",19,39,35
+"44","Comoros",NA,NA,35
+"45","Cook Islands",15,30,30
+"46","DR Congo",20,40,35
+"47","Congo",18.9,NA,30
+"48","Costa Rica",13,25,30
+"49","Croatia",25,40,18
+"50","Cuba",20,50,30
+"51","Curaçao",9,46.5,22
+"52","Cyprus",19,35,12.5
+"53","Czech Republic",21,45.7,21
+"54","Denmark",25,52.07,25
+"55","Djibouti",NA,NA,25
+"56","Dominica",15,35,25
+"57","Dominican Republic",18,25,27
+"58","Timor-Leste",NA,NA,10
+"59","Ecuador",15,35,25
+"60","Egypt",14,27.5,22.5
+"61","El Salvador",13,30,30
+"62","Equatorial Guinea",15,35,35
+"63","Eritrea",NA,NA,34
+"64","Estonia",22,23.6,20
+"65","Eswatini (Swaziland)",15,33,27.5
+"66","Ethiopia",NA,35,30
+"67","Falkland Islands",0,26,26
+"68","Faroe Islands",NA,NA,18
+"69","Micronesia",NA,NA,21
+"70","Fiji",9,20,20
+"71","Finland",25.5,53.61,NA
+"72","France",20,55.34,25
+"73","French Polynesia",NA,NA,25
+"74","Gabon",18,35,35
+"75","Gambia",NA,30,31
+"76","Germany",19,45,30
+"77","Georgia",18,20,15
+"78","Ghana",3,NA,25
+"79","Gibraltar",0,40,10
+"80","Greece",30,44,22
+"81","Greenland",0,44,25
+"82","Grenada",NA,NA,28
+"83","Guatemala",12,7,25
+"84","Guernsey",0,20,0
+"85","Guinea",NA,NA,35
+"86","Guinea-Bissau",NA,NA,35
+"87","Guyana",14,35,30
+"88","Haiti",10,30,30
+"89","Honduras",NA,NA,25
+"90","Hong Kong",0,15,16.5
+"91","Hungary",27,18.5,9
+"92","Iceland",24,46.28,20
+"93","India",40,39,22
+"94","Indonesia",11,35,22
+"95","Iran",9,35,25
+"96","Iraq",20,15,15
+"97","Ireland",23,52.1,12.5
+"98","Isle of Man",20,22,0
+"99","Israel",18,50,23
+"100","Italy",22,43,27.9
+"101","Ivory Coast",NA,NA,25
+"102","Jamaica",20,30,33.3
+"103","Japan",10,50.5,29.74
+"104","Jersey",5,20,0
+"105","Jordan",16,25,20
+"106","Kazakhstan",13,15,20
+"107","Kenya",16,35,30
+"108","Kiribati",NA,NA,35
+"109","Kosovo",0,10,10
+"110","Kuwait",0,0,16
+"111","North Korea",10,20,25
+"112","Kyrgyzstan",12,10,10
+"113","Laos",NA,NA,35
+"114","Latvia",21,31.4,20
+"115","Lebanon",11,25,17
+"116","Lesotho",NA,NA,25
+"117","Liberia",NA,NA,25
+"118","Libya",NA,NA,24.5
+"119","Liechtenstein",8.1,22.4,12.5
+"120","Lithuania",21,42.77,15
+"121","Luxembourg",17,44.2,28.69
+"122","Macau",0,12,12
+"123","Madagascar",NA,NA,20
+"124","Madeira",22,45.1,20
+"125","Malawi",NA,35,30
+"126","Malaysia",10,30,24
+"127","Maldives",6,15,15
+"128","Mali",NA,NA,30
+"129","Malta",18,35,35
+"130","Marshall Islands",4,12,3
+"131","Mauritania",NA,NA,25
+"132","Mauritius",15,15,15
+"133","Mexico",16,35,30
+"134","Moldova",20,24,12
+"135","Monaco",20,0,25
+"136","Mongolia",10,10,10
+"137","Montenegro",0,15,9
+"138","Montserrat",NA,NA,20
+"139","Morocco",20,38,31
+"140","Mozambique",NA,NA,32
+"141","Myanmar",NA,NA,22
+"142","Namibia",15,37,32
+"143","Nauru",NA,NA,25
+"144","Nepal",13,36,30
+"145","Netherlands",21,49.5,25
+"146","New Zealand",15,39,28
+"147","New Caledonia",NA,40,30
+"148","Nicaragua",NA,NA,30
+"149","Niger",7,NA,30
+"150","Nigeria",7.5,24,30
+"151","Niue",12.5,NA,0
+"152","Norfolk Island",NA,NA,0
+"153","North Macedonia",18,18,10
+"154","Norway",25,47.4,22
+"155","Oman",5,0,15
+"156","Pakistan",18,45,29
+"157","Palau",NA,NA,0
+"158","Palestine",14.5,15,15
+"159","Panama",15,27,25
+"160","Papua New Guinea",NA,NA,30
+"161","Paraguay",10,10,10
+"162","Peru",16,30,30
+"163","Philippines",12,35,30
+"164","Pitcairn Islands",0,0,0
+"165","Poland",23,45,19
+"166","Portugal",23,56.03,20
+"167","Puerto Rico",11.5,33.34,20
+"168","Qatar",0,0,10
+"169","Romania",19,45,16
+"170","Russia",20,50,20
+"171","Rwanda",18,30,30
+"172","Saint Kitts and Nevis",NA,0,33
+"173","Saint Barthélemy",0,0,0
+"174","Saint Lucia",NA,NA,30
+"175","Saint Martin",NA,NA,20
+"176","Saint Pierre and Miquelon",NA,NA,33.3
+"177","Saint Vincent and the Grenadines",NA,NA,30
+"178","Samoa",NA,NA,27
+"179","San Marino",17,35,17
+"180","São Tomé and Príncipe",NA,NA,25
+"181","Sark",0,0,0
+"182","Saudi Arabia",15,0,15
+"183","Senegal",20,50,25
+"184","Serbia",20,25,15
+"185","Seychelles",15,15,33
+"186","Sierra Leone",NA,NA,25
+"187","Singapore",9,22,17
+"188","Sint Maarten",5,47.5,34.5
+"189","Slovakia",23,25,21
+"190","Slovenia",22,50,19
+"191","Solomon Islands",NA,NA,30
+"192","Somalia",0,18,30
+"193","South Africa",15,45,28
+"194","South Korea",10,53.4,24.2
+"195","South Sudan",NA,NA,30
+"196","Spain",21,52.3,25
+"197","Sri Lanka",12,36,30
+"198","Sudan",NA,NA,15
+"199","Suriname",NA,38,36
+"200","Svalbard",0,22,16
+"201","Sweden",25,45.6,20.6
+"202","Switzerland",8.1,50.14,17.92
+"203","Syria",NA,15,22
+"204","Taiwan",5,40,20
+"205","Tajikistan",18,25,25
+"206","Tanzania",14,30,30
+"207","Thailand",7,35,20
+"208","Togo",NA,NA,27
+"209","Tokelau",NA,NA,0
+"210","Tonga",NA,NA,25
+"211","Trinidad and Tobago",12.5,30,30
+"212","Tunisia",18,35,30
+"213","Turkey",20,40,25
+"214","Turkmenistan",NA,NA,8
+"215","Turks and Caicos Islands",NA,NA,0
+"216","Tuvalu",NA,NA,30
+"217","Uganda",18,NA,30
+"218","Ukraine",2,22,18
+"219","United Arab Emirates",5,0,9
+"220","United Kingdom",20,69.5,25
+"221","United States",11.5,50.3,21
+"222","Uruguay",22,36,25
+"223","Uzbekistan",15,12,20
+"224","Vanuatu",0,0,0
+"225","Venezuela",16,34,34
+"226","Vietnam",10,35,20
+"227","British Virgin Islands",NA,0,0
+"228","U.S. Virgin Islands",NA,NA,38.5
+"229","Wallis and Futuna",0,0,0
+"230","Yemen",2,15,20
+"231","Zambia",16,30,30
+"232","Zimbabwe",15,45,25
